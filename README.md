@@ -7,7 +7,7 @@ Before we get into the tax reconciliation tables, we need to match the corporati
 2. Extract CIK numbers from the first or second page of the 10K files and match the corporations using CIK. 
 3. Manually search corporations on Google and SEC to find useful information (e.g. new name) and match the corporations using the information.
 
-Since a lot of corporations have changed their names, merged with other corporations or bankrupted, we are not able to match every corporation in Mergent with Compustat. Up till now, we have matched 4174 corporations in Mergent dataset and left 460 corporations unmatched. 
+Since a lot of corporations have changed their names, merged with other corporations or bankrupted, we are not able to match every corporation in Mergent with Compustat. 
 
 ## Step 1 Download PDF files from Mergent
 Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
