@@ -69,7 +69,10 @@ Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about 
 
 Some examples of the extracted tables and original PDFs can also be found in folder "Step_3".
 
-## Step 4 Parse the extracted tables
+## Step 4 Classify the extracted tables
+
+
+## Step 5 Parse the tax reconciliation tables
 
 ## Step 5 Diagnostics
 To be done.
