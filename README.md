@@ -54,7 +54,7 @@ There are some special cases that we should always keep in mind.
 1. Some corporations do not have a tax reconciliation table, instead, they list their tax reconciliation information in paragraph. To deal with these exceptions, we may use some natural language processing models such as BERT. Check "american home products corp_1981_page_57.pdf", "international business machines corp_1981_page_57.pdf" and "coca cola co_1982_page_100.pdf" in "Step_2". 
 2. These old documents can be very blurry so tesseract-ocr cannot read the texts on the pages. Check "american express co_1985.pdf".
 3. Since the PDF 10K files are scanned copy of the printed 10K reports, one printed page can be split into multiple PDF pages. If the tax reconciliation table is split into multiple pages, the most left columns usually describe the newest tax reconciliation data, and these columns are often located in the page that we extracted (since this page contains the most keywords). Though our classfier aims to extract all these pages, the pages with very little information (such as "cheyenne software inc_1995_page_95.pdf" and "tektronix inc_1995_page_116.pdf") are often be missed. To better understand this issue, check the PDF pages of cheyenne software inc and tektronix inc.
-5. We may find multiple tax reconciliation tables in one 10K file. Except for the case mentioned above, some 10K files have duplicate information about a single firm. We may find a tax reconciliation table appear twice in one 10K file. Another case is that some corporations combined the 10K reports for the parent companies and 10K reports for the subsidiaries together. In both cases, multiple PDF pages will be extracted from the original PDF. We need to be careful with the different tax reconciliation tables extracted from the same 10K form. 
+4. We may find multiple tax reconciliation tables in one 10K file. Except for the case mentioned above, some 10K files have duplicate information about a single firm. We may find a tax reconciliation table appear twice in one 10K file. Another case is that some corporations combined the 10K reports for the parent companies and 10K reports for the subsidiaries together. In both cases, multiple PDF pages will be extracted from the original PDF. We need to be careful with the different tax reconciliation tables extracted from the same 10K form. 
 
 
 ## Step 3 Extract Tables from PDF Pages
@@ -90,12 +90,24 @@ Next, we want to combine the tax reconciliation tables of different companies to
 
 **Issues:** Parsing the tax reconciliation tables is harder than we expect. The qualities of these scanned 10K docuemnts vary a lot across companies across years. Amazon Textract cannot always extract the correct information from from PDFs in a correct format. We need to take care of each type of exceptions and keep developing our parsing code. Here are some special cases:
 
-1. 
+1. Amazon Textract put multlple values in one cell. Check row 282 in "mergent_1995" and "aurora electronics inc_1995_page_62_2.csv".
+2. Amazon Textract split the label of a variable into two or three rows. Check rows 104-121, 703-711 and associated CSV files. One way to fix this is to combine the blank row with the row above it. However, this doesn't always work. Sometiems the blank rows should be merged with the row below it rather than the row above it. 
+3. When the tax reconciliation table is plit into multiple pages, we should identify whether the table is cut lengthwise or crosswise in order to merge the separate CSVs together. See the PDF pages of american stores co and amrep corp.
+4. As we mentioned in Step 2 issue 4, one 10K file may contain more than one tax reconciliation tables. It will be a problem if we parse all these tables. 
+5. We cannot always find variable indicator (rate or amount) in the tax reconciliation table. 
+
+The parsing code is still being developed and it will be uploaded later.
 
 ## Step 6 Convert Amounts to Rates and Diagnostics
 
-There are several things 
+There are several things are pending with this project. Firstly, we want to convert the data in amounts to data in rates. Next, we want to do diagostics to identify wrong data in our datasets. 
 
-
+## Appendix
+The results for each step are being uploaded to Ellen's cluster. Here are the addresses of these files:
+1. Downloaded Mergent 10K files: /home/shared/li001122/1_Downloaded_10K_Mergent - being uploaded
+2. Extracted pages from Step 2: /home/shared/li001122/2_Extracted_Pages - uploaded
+3. Extracted texts and tables from PDFs using Amazon Textract: /home/shared/li001122/3_Extracted_Table_Amazon_Textract. - uploaded
+4. The tables that are identified as target table by fastText classifier: /home/shared/li001122/4_Classfied_as_Tax_Table - uploaded
+5. The parsed files for each year: /home/shared/li001122/5_Parsed_Tables - to be uploaded
 
 
