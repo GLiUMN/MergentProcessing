@@ -58,7 +58,16 @@ There are some special cases that we should always keep in mind.
 
 
 ## Step 3 Extract tables from PDF pages
-Then, we want to extract the tax reconciliation tables from the PDF pages using Amazon Textract. Traditional OCR tools can only extract texts from PDFs and it is very hard for us to deal with these texts. To directly extract the tax reconciliation tables from PDFs, we employ Amazon Textract, an open source tool developed by Amazon. Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about how to set up Amazon Textract on your own device. 
+Then, we want to extract the tax reconciliation tables from the PDF pages using Amazon Textract. Traditional OCR tools can only extract texts from PDFs and it is very hard for us to deal with these texts. To directly extract the tax reconciliation tables from PDFs, we employed Amazon Textract, an open source tool developed by Amazon. The advantage of Amazon Textract is that it can detect whether an image or a PDF page contains forms or tables and it can directly extract tables or forms from the original files. Once Amazon Textract detects tables, we can extract the tables from the PDF or image and convert the tables to a manageable format (CSV). We connected Amazon Textract with our own device using API so we can transport a batch of PDFs to Amazon and receive extracted tables and texts. After this step, we extracted tables and texts from the PDF pages from Step 2. We store tables in CSV format and texts in TXT format. 
+
+Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about how to set up Amazon Textract on your own device. After this, you should be able to use the code "Amazon_Textract_Utility.py" and "Amazon_Textract_Driver.py" in folder "Step_3". The code stores the extracted texts no matter whether Amazon Textract detects tables or not.
+1. convert a PDF page to an image
+2. convert the image to a byte array
+3. pass the byte array to Amazon Textract
+4. receive extracted information and store the texts in a txt file 
+6. transform the received information to tables and store every single table in a separate file
+
+Some examples of the extracted tables and original PDFs can also be found in folder "Step_3".
 
 ## Step 4 Parse the extracted tables
 
