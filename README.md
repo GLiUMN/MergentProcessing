@@ -38,7 +38,7 @@ Since a lot of corporations have changed their names, merged with other corporat
 
 ## Step 1 Download PDF files from Mergent
 Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
-Note: The code and the chrome driver are also stored in folder "Step_1". The code and the introduction of Step 1 is documented by Tobey.
+Note: The introduction of Step 1 is documented by Tobey.
 
 **Issue:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1". We can use other forms of financial reports to replace the damaged files. We can either design another algorithm to extract files from Mergent or manually download files from Mergent website. 
 
@@ -71,16 +71,18 @@ Some examples of the extracted tables and original PDFs can also be found in fol
 
 ## Step 4 Classify the extracted tables
 Since every PDF page can contain more than one tables, we want to know which specific table is tax reconciliation table. Hence, we train a classifier using fastText to classify the tables. This classifier is trained by Thomas. The details about the classifier can be found in the tech appendix documentation.
-The code and classifier model can be found in folder "Step_4". The code converts the CSV tables into texts, and transforms the texts to fastText. After running the classifier, the code returns a CSV table, indicating which table is classified as target table (tax reconciliation table) or non-target table and the associated confidence level. 
+After running the classifier, we obtain a CSV table, indicating which table is classified as target table (tax reconciliation table) or non-target table and the associated confidence level. If the fastText classifier does not classify and tables found in a PDF page as tax reconciliation table, the page is either the wrong page or has the tax reconciliation data in paragraphs instead of tables. 
 
-
+**Issues:** Sometimes the fastText classifier fails to recognize tax reconciliation table. Some examples can be found in folder "Step_4".
 
 ## Step 5 Parse the tax reconciliation tables
 
-## Step 5 Diagnostics
+
+
+
+## Step 6 Diagnostics
 To be done.
 
-## Appendix
 
 
 
