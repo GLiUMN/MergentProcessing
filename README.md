@@ -1,7 +1,16 @@
 # Introduction
 This is the GitHub page of the Mergent part of the Tax Reconciliation Data Project directed by Professors Anmol Bhandari and Ellen McGrattan. In this project, we aim to create a database for tax reconciliation data for C-Corporations by extracting tables from 10-K financial reports. Specifically, we want to extract tax reconciliation data from the 10-K files (PDF) between 1980 and 1995 grabbed from Mergent Archives. The HHEI presentation slides and video may be helpful for understanding the motivation and progress of our project. 
 
-We use "Tax Reconciliation project plan.xlsx" to track the progress of our Mergent project. The first spreadsheet is a brief introduction of our project and the main steps. In the second spreadsheet, we track the number of companies we have processed for each step and the total market cap for those companies for each year. The third spreadsheet shows the top 10 companies that are missed from our dataset in terms of market cap. The fourth spreadsheet shows the top 10 firms that we downloaded but eventually failed to extract the tax reconciliation data. Finding the patterns of these corporations' 10k files will be helpful for us to solve the exceptions in each step.
+We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to track the progress of our Mergent project.
+<details>
+  <summary>Click to expand!</summary>
+  
+  ## Heading
+  1. A numbered
+  2. list
+     * With some
+     * Sub bullets
+</details>
 
 ## Step 0 Match companies with compustat
 Before we get into the tax reconciliation tables, we need to match the corporations in Mergent database with the corporations in Compustat. To do this, we have:
@@ -26,3 +35,8 @@ This classfier
 
 ## Step 5 Diagnostics
 To be done.
+
+## Appendix
+
+
+
