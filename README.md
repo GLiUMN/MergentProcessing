@@ -28,19 +28,21 @@ We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to trac
      
 </details>
 
-## Step 0 Match Companies with Compustat
+
+
+## Step 0 Download PDF Files from Mergent
+Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
+Note: The introduction of Step 1 is documented by Tobey.
+
+**Issue:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1". We can use other forms of financial reports to replace the damaged files. We can either design another algorithm to extract files from Mergent or manually download files from Mergent website. 
+
+## Step 1 Match Companies with Compustat
 Before we get into the tax reconciliation tables, we need to match the corporations in Mergent database with the corporations in Compustat. To do this, we have:
 1. Match corporations with Compustat by CIK, CONM, CONML variables.
 2. Extract CIK numbers from the first or second page of the 10K files and match the corporations using CIK. 
 3. Manually search corporations on Google and SEC to find useful information (e.g. new name) and match the corporations using the information.
 
 Since a lot of corporations have changed their names, merged with other corporations or bankrupted, we are not able to match every corporation in Mergent with Compustat. However, it will still be very helpful if we can match more compranies.
-
-## Step 1 Download PDF Files from Mergent
-Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
-Note: The introduction of Step 1 is documented by Tobey.
-
-**Issue:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1". We can use other forms of financial reports to replace the damaged files. We can either design another algorithm to extract files from Mergent or manually download files from Mergent website. 
 
 ## Step 2 Extract Pages from PDFs. 
 After downloading the 10K PDF files, we want to find out which specific pages contain the tax reconciliation tables. When looking at the annual reports, we noticed there are certain words that commonly appear within the reconciliation tables, and only occasionally appear outside of the reconciliation tables. This set of words includes "reconciliation, "statutory", "income tax", and "effective tax rate", among others. In order to identify which page of the annual reports includes the reconciliation data tables, we checked how many of these keywords were found in the text extracted from each page (using tesseract-ocr). Pages with several of these keywords are more likely to contain the data that we want to compile for our data set. To improve the accuracy of the classfier, we allocated different weights to those keywords. We then summed the weights of all keywords found on a given page. Thus, pages with higher weight sums were more likely to contain the reconciliation data, and so we only kept the pages with the highest sums. We use the 10k reports in 1995 as a "training set" to test the performance of our keywords and weights. 
