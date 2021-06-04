@@ -3,13 +3,25 @@ This is the GitHub page of the Mergent part of the Tax Reconciliation Data Proje
 
 We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to track the progress of our Mergent project.
 <details>
-  <summary>Click to expand!</summary>
-  
-  ## Heading
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
+  <summary>Instructions of how to use the tracking files</summary>
+  1. Tax Reconciliation project plan.xlsx: The first spreadsheet is a brief introduction and the main steps of this project. The second spreadsheet shows the progress of this project: the number of companies that have been processed in each step, the associated market cap of these companies, and the share of market cap relative to the total market cap in Compustat. The third spreadsheet collects the information of the top 10 companies whose 10K files are missed from our dataset in terms of market cap. The fourth spreadsheet shows the top 10 companies whose 10K files are downloaded but eventually failed to be parsed. 
+  2. mergent_progress.csv: This file is based on the corporations in compustat. We use this file to figure out which companies are in our dataset and which step the company is in. 
+  *The keys of this spreadsheet is shown below:
+  *fyear: the fiscal year of the data
+  *conm: company name in capital letters in compustat
+  *conml: company name in compustat
+  *cik: CIK number
+  *tic: TIC code
+  *csho: common shares outstanding
+  *prcc_f: price close - annual - fiscal
+  *market_cap: market cap
+  *company: the associated company name in Mergent if the company's 10K in that year is found in Mergent
+  *downloaded: 1 if we downloaded the company's 10K in that year and 0 otherwise
+  *extracted: 1 if my classifier extracted PDF pages from the company's 10K in that year and 0 otherwise
+  *amazon: 1 if Amazon Textract extracted tables from the selected PDF pages and 0 otherwise
+  *classified: 1 if the table is recognized as tax reconciliation table by Thomas's classifier and 0 otherwise
+  *parsed: 1 if the tax reconciliation table is parsed and 0 otherwise
+     
 </details>
 
 ## Step 0 Match companies with compustat
