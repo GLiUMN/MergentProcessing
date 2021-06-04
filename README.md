@@ -40,24 +40,18 @@ Since a lot of corporations have changed their names, merged with other corporat
 Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
 Note: The code and the introduction of Step 1 is documented by Tobey.
 
-**Issues:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1".
+**Issue:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1".
 
-**Solutions:** We can use other forms of financial reports to replace the damaged files. We can either design another algorithm to extract files from Mergent or manually download files from Mergent website. 
+**Solution:** We can use other forms of financial reports to replace the damaged files. We can either design another algorithm to extract files from Mergent or manually download files from Mergent website. 
 
 The code and the chrome driver are also stored in folder "Step_1".
 
 ## Step 2 Extract Pages from PDFs. 
 After downloading the 10K PDF files, we want to find out which specific pages contain the tax reconciliation tables. When looking at the annual reports, we noticed there are certain words that commonly appear within the reconciliation tables, and only occasionally appear outside of the reconciliation tables. This set of words includes "reconciliation, "statutory", "income tax", and "effective tax rate", among others. In order to identify which page of the annual reports includes the reconciliation data tables, we checked how many of these keywords are found in the text extracted from each page. Pages with several of these keywords are more likely to contain the data that we want to compile for our data set. To improve the accuracy of the classfier, we allocated different weights to those keywords. We then summed the weights of all keywords found on a given page. Thus, pages with higher weight sums were more likely to contain the reconciliation data, and so we only kept the pages with the highest sums. We use the 10k reports in 1995 as a "training set" to test the performance of our keywords and weights. 
 
-<details>
-  <summary>Details about the classfier</summary>
-  
-  ## Heading
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
+To use the code, you should set up the addresses, keywords, and associated weights in "Inputs.py" and run the single process code "Driver.py" or the parallel process code "Driver multiprocess.py". "Utility.py" stores the functions that are used in the classfier. 
+
+**Issues:** 
 
 ## Step 3 Extract tables from PDF pages
 
