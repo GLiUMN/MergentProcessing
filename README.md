@@ -70,6 +70,9 @@ Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about 
 Some examples of the extracted tables and original PDFs can also be found in folder "Step_3".
 
 ## Step 4 Classify the extracted tables
+Since every PDF page can contain more than one tables, we want to know which specific table is tax reconciliation table. Hence, we train a classifier using fastText to classify the tables. This classifier is trained by Thomas. The details about the classifier can be found in the tech appendix documentation.
+The code and classifier model can be found in folder "Step_4". The code converts the CSV tables into texts, and transforms the texts to fastText. After running the classifier, the code returns a CSV table, indicating which table is classified as target table (tax reconciliation table) or non-target table and the associated confidence level. 
+
 
 
 ## Step 5 Parse the tax reconciliation tables
