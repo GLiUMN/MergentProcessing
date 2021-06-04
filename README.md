@@ -92,15 +92,15 @@ Next, we want to combine the tax reconciliation tables of different companies to
 
 1. Amazon Textract put multlple values in one cell. Check row 282 in "mergent_1995" and "aurora electronics inc_1995_page_62_2.csv".
 2. Amazon Textract split the label of a variable into two or three rows. Check rows 104-121, 703-711 and associated CSV files. One way to fix this is to combine the blank row with the row above it. However, this doesn't always work. Sometiems the blank rows should be merged with the row below it rather than the row above it. 
-3. When the tax reconciliation table is plit into multiple pages, we should identify whether the table is cut lengthwise or crosswise in order to merge the separate CSVs together. See the PDF pages of american stores co and amrep corp.
+3. When the tax reconciliation table is plit into multiple pages, we should identify whether the table is cut lengthwise or crosswise in order to merge the separate CSVs together. See the PDF pages of american stores co and amrep corp. More importantly, when only one or two rows are cut out from the bottom, we are very likely to miss them from the previous steps. This leads to missing data.
 4. As we mentioned in Step 2 issue 4, one 10K file may contain more than one tax reconciliation tables. It will be a problem if we parse all these tables. 
 5. We cannot always find variable indicator (rate or amount) in the tax reconciliation table. 
 
-The parsing code is still being developed and it will be uploaded later.
+Since we want to specifically deal with case 3 and 4, we asked our parsing code to skip the companies if more than one tax reconciliation tables are extracted from their 10K reports in one year. The parsing code is still being developed and it will be uploaded later.
 
 ## Step 6 Convert Amounts to Rates and Diagnostics
 
-There are several things are pending with this project. Firstly, we want to convert the data in amounts to data in rates. Next, we want to do diagostics to identify wrong data in our datasets. 
+There are several things are pending with this project. Firstly, we want to convert the data in amounts to data in rates. Next, we want to do diagostics to identify wrong data in our datasets. There are a bunch of different problems within each step and we should consider which problems we should care about and which problems we can just ignore. 
 
 ## Appendix
 The results for each step are being uploaded to Ellen's cluster. Here are the addresses of these files:
