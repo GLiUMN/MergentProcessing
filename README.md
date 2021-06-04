@@ -4,12 +4,13 @@ This is the GitHub page of the Mergent part of the Tax Reconciliation Data Proje
 We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to track the progress of our Mergent project.
 <details>
   <summary>Instructions of how to use the tracking files</summary>
-  1) Tax Reconciliation project plan.xlsx: 
+  
+  1. Tax Reconciliation project plan.xlsx: 
   * The first spreadsheet is a brief introduction and the main steps of this project. 
   * The second spreadsheet shows the progress of this project: the number of companies that have been processed in each step, the associated market cap of these companies, and the share of market cap relative to the total market cap in Compustat. 
   * The third spreadsheet collects the information of the top 10 companies whose 10K files are missed from our dataset in terms of market cap. The fourth spreadsheet shows the top 10 companies whose 10K files are downloaded but eventually failed to be parsed. 
   
-  2) mergent_progress.csv: This file is based on the corporations in compustat. We use this file to figure out which companies are in our dataset and which step the company is in. 
+  2. mergent_progress.csv: This file is based on the corporations in compustat. We use this file to figure out which companies are in our dataset and which step the company is in. 
   * The keys of this spreadsheet is shown below:
   * fyear: the fiscal year of the data
   * conm: company name in capital letters in compustat
