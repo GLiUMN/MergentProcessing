@@ -10,8 +10,7 @@ We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to trac
   * The second spreadsheet shows the progress of this project: the number of companies that have been processed in each step, the associated market cap of these companies, and the share of market cap relative to the total market cap in Compustat. 
   * The third spreadsheet collects the information of the top 10 companies whose 10K files are missed from our dataset in terms of market cap. The fourth spreadsheet shows the top 10 companies whose 10K files are downloaded but eventually failed to be parsed. 
   
-  2. mergent_progress.csv: This file is based on the corporations in compustat. We use this file to figure out which companies are in our dataset and which step the company is in. 
-  * The keys of this spreadsheet is shown below:
+  2. mergent_progress.csv: This file is based on the corporations in compustat. We use this file to figure out which companies are in our dataset and which step the company is in. The keys of this spreadsheet are shown below:
   * fyear: the fiscal year of the data
   * conm: company name in capital letters in compustat
   * conml: company name in compustat
@@ -40,7 +39,8 @@ Since a lot of corporations have changed their names, merged with other corporat
 ## Step 1 Download PDF files from Mergent
 Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
 Note: The code and the introduction of Step 1 is documented by Tobey.
-
+**Issues:** A lot of 10K files we have downloaded are "damaged" files. These files are usually very small. Some examples can be found in folder "Step_1".
+**Solutions** We can use other forms of financial reports to replace the damaged files.
 ## Step 2 Extract Pages from PDFs. 
 After downloading the 10K PDF files, we want to find out which specific pages contain the tax reconciliation tables. When looking at the annual reports, we noticed there are certain words that commonly appear within the reconciliation tables, and only occasionally appear outside of the reconciliation tables. This set of words includes "reconciliation, "statutory", "income tax", and "effective tax rate", among others. In order to identify which page of the annual reports includes the reconciliation data tables, we checked how many of these keywords are found in the text extracted from each page. Pages with several of these keywords are more likely to contain the data that we want to compile for our data set. To improve the accuracy of the algorithm, we allocated different weights to those keywords. We then summed the weights of all keywords found on a given page. Thus, pages with higher weight sums were more likely to contain the reconciliation data, and so we only kept the pages with the highest sums. We use the 10k reports in 1995 as a "training set" to test the performance of our keywords and weights. 
 This classfier 
