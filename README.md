@@ -28,7 +28,7 @@ We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to trac
      
 </details>
 
-## Step 0 Match companies with compustat
+## Step 0 Match Companies with Compustat
 Before we get into the tax reconciliation tables, we need to match the corporations in Mergent database with the corporations in Compustat. To do this, we have:
 1. Match corporations with Compustat by CIK, CONM, CONML variables.
 2. Extract CIK numbers from the first or second page of the 10K files and match the corporations using CIK. 
@@ -36,7 +36,7 @@ Before we get into the tax reconciliation tables, we need to match the corporati
 
 Since a lot of corporations have changed their names, merged with other corporations or bankrupted, we are not able to match every corporation in Mergent with Compustat. However, it will still be very helpful if we can match more compranies.
 
-## Step 1 Download PDF files from Mergent
+## Step 1 Download PDF Files from Mergent
 Mergent Archives provides historical 10-K files as PDF documents in the ”SEC Histor-ical Filings” section of its website.  We used the selenium Python package to automatethe downloading of the 10-K files, and the code for this can be found in the file ”Mer-gentv03.py.” This code opens a Chrome browser window,  goes to the main page ofMergent Archives, waits for you to log in, and then loops through all companies forthe given years and downloads each 10-K PDF file in succession. We have downloaded 27616 10K files for roughly 4634 corporations. 
 Note: The introduction of Step 1 is documented by Tobey.
 
@@ -57,7 +57,7 @@ There are some special cases that we should always keep in mind.
 5. We may find multiple tax reconciliation tables in one 10K file. Except for the case mentioned above, some 10K files have duplicate information about a single firm. We may find a tax reconciliation table appear twice in one 10K file. Another case is that some corporations combined the 10K reports for the parent companies and 10K reports for the subsidiaries together. In both cases, multiple PDF pages will be extracted from the original PDF. We need to be careful with the different tax reconciliation tables extracted from the same 10K form. 
 
 
-## Step 3 Extract tables from PDF pages
+## Step 3 Extract Tables from PDF Pages
 Then, we want to extract the tax reconciliation tables from the PDF pages using Amazon Textract. Traditional OCR tools can only extract texts from PDFs and it is very hard for us to deal with these texts. To directly extract the tax reconciliation tables from PDFs, we employed Amazon Textract, an open source tool developed by Amazon. The advantage of Amazon Textract is that it can detect whether an image or a PDF page contains forms or tables and it can directly extract tables or forms from the original files. Once Amazon Textract detects tables, we can extract the tables from the PDF or image and convert the tables to a manageable format (CSV). We connected Amazon Textract with our own device using API so we can transport a batch of PDFs to Amazon and receive extracted tables and texts. After this step, we extracted tables and texts from the PDF pages from Step 2. We store tables in CSV format and texts in TXT format. 
 
 Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about how to set up Amazon Textract on your own device. After this, you should be able to use the code "Amazon_Textract_Utility.py" and "Amazon_Textract_Driver.py" in folder "Step_3". The code stores the extracted texts no matter whether Amazon Textract detects tables or not.
@@ -69,19 +69,32 @@ Check https://docs.aws.amazon.com/textract/latest/dg/getting-started.html about 
 
 Some examples of the extracted tables and original PDFs can also be found in folder "Step_3".
 
-## Step 4 Classify the extracted tables
+## Step 4 Classify the Extracted Tables
 Since every PDF page can contain more than one tables, we want to know which specific table is tax reconciliation table. Hence, we train a classifier using fastText to classify the tables. This classifier is trained by Thomas. The details about the classifier can be found in the tech appendix documentation.
 After running the classifier, we obtain a CSV table, indicating which table is classified as target table (tax reconciliation table) or non-target table and the associated confidence level. If the fastText classifier does not classify and tables found in a PDF page as tax reconciliation table, the page is either the wrong page or has the tax reconciliation data in paragraphs instead of tables. 
 
 **Issues:** Sometimes the fastText classifier fails to recognize tax reconciliation table. Some examples can be found in folder "Step_4".
 
-## Step 5 Parse the tax reconciliation tables
+## Step 5 Parse the Tax Reconciliation Tables
+Next, we want to combine the tax reconciliation tables of different companies to a single CSV file and parse the tables into a fixed format. An example of the parsed CSV can be found in folder "Step_5". Here are the keys for the columns names:
 
+* company: company name
+* year_10k: the year when the 10K form was filed
+* year_col: the year of the data
+* var: variable name
+* data_var: the parsed data
+* data_row: the original data in the separate CSVs
+* indicator: indicating if the data is in amounts or rates
+* i_row: row number of the data
+* N_rows: total number of rows of the table
 
+**Issues:** Parsing the tax reconciliation tables is harder than we expect. The qualities of these scanned 10K docuemnts vary a lot across companies across years. Amazon Textract cannot always extract the correct information from from PDFs in a correct format. We need to take care of each type of exceptions and keep developing our parsing code. Here are some special cases:
 
+1. 
 
-## Step 6 Diagnostics
-To be done.
+## Step 6 Convert Amounts to Rates and Diagnostics
+
+There are several things 
 
 
 
