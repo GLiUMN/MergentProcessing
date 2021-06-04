@@ -3,7 +3,7 @@ This is the GitHub page of the Mergent part of the Tax Reconciliation Data Proje
 
 We use "Tax Reconciliation project plan.xlsx" and "mergent_progress.csv" to track the progress of our Mergent project.
 <details>
-  <summary>Instructions of how to use the tracking files</summary>
+  <summary>**Instructions of how to use the tracking files**</summary>
   
   1. Tax Reconciliation project plan.xlsx: 
   * The first spreadsheet is a brief introduction and the main steps of this project. 
