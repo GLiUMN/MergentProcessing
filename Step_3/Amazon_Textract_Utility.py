@@ -9,13 +9,13 @@ import io
 import pandas as pd
 import os
 
-# Set the address of the dictionary which contains the original pdf files.
+# Set the address of the directory which contains the original pdf files.
 source = "/Volumes/LaCie/OCR cluster/1986"
-# Set the address of the dictionary which you want to put the extracted txt files in.
+# Set the address of the directory which you want to put the extracted txt files in.
 text_folder = "/Volumes/LaCie/Amazon Textract/OCR/1986_txt"
-# Set the address of the dictionary which you want to put the extracted forms in.
+# Set the address of the directory which you want to put the extracted forms in.
 forms_folder = ""
-# Set the address of the dictionary which you want to put the extracted tables in.
+# Set the address of the directory which you want to put the extracted tables in.
 table_folder = "/Volumes/LaCie/Amazon Textract/OCR/1986_table"
 # Set the address of the csv file which is used to track the progress.
 csv_address = "/Volumes/LaCie/Amazon Textract/OCR/1986_tracking.csv"
